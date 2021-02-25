@@ -1,0 +1,13 @@
+.vscode
+.ionide
+__pycache__
+Archive
+db_backup
+env
+flask_app/__pycache__
+node_modules
+debug.log
+.env
+.pytest_cache
+requirements.bk1
+remove_all_packages.txt
