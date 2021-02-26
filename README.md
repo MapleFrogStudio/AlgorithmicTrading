@@ -1,4 +1,10 @@
 # Algorithmic Trading - Python For Fun 
+  
+.. image:: https://img.shields.io/badge/python-2.7,%203.4+-blue.svg?style=flat
+    :target: https://pypi.python.org/pypi/yfinance
+    :alt: Python version
+
+
 Algorithmic trading (also called automated trading, black-box trading, or algo-trading) uses a coded functions to implement well defined sets of instructions to place trades. This project helps to experiment with python code and theory behind these concepts.  
   
 Many platforms exist on the Web to automate trading, this project is not intended to replace any of them  
