@@ -15,10 +15,10 @@ This repo is free to fork or download, but has no value as an investment tool. P
 # Data sources
 This project uses the ` yfinance ` python package to extract data from the yahoo finance web site
 
-# Algorithms
-- SMA30 : Simple Average Margin over 30 days
-- SMA100 : Simple Average Margin over 100 days
-- Dual Cross Over : KPIs that show buy and sell indicators when SMA30 and SMA100 cross each other
+# Algorithms and KPIs
+- SMA30 : Simple Moving Average - 30 days
+- SMA100 : Simple Moving Average - 100 days
+- Dual Cross Over Indicator : KPIs that show buy and sell indicators when SMA30 and SMA100 cross each other
 
 # Usage
 Clone this repo to your workspace ` git clone https://github.com/MapleFrogStudio/AlgorithmicTrading.git `  
