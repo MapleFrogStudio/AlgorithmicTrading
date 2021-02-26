@@ -16,6 +16,7 @@ def show_menu():
     print(f"     --yahoo                    : Get list of all companies on yahoo finance")
     print(f"     --info <ticker>            : Get company info for ticker (data from yahoo finance)")
     print(f"     --hist <ticker> <days>     : Show historical stock prices, days = 1000 by default")
+    print(f"     --candle <ticker> <days>   : Show Candlestick graph with volumes and 3 SMA?, days = 1000 by default")
     print(f"     --dmaco <ticker> <days>    : Show Dual Margin Cross Over (SMA30 vs SMA100), days = 1000 by default")
     print(f"  [optional values]:") 
     print(f"     <ticker> : Stock ticker of file to load")
@@ -25,17 +26,16 @@ def show_menu():
 
 def default_help():
     print(f"\nDual Margin Average Cross Over Indicators ( © Maple Frog Studio, 2021, Alpha v0.1)")
-    print(f"--- SMA30 vs SMA100")
-    print(f"--- Historical pricing from Yahho Finance ---\n")
     print(f"Usage: 'py dmaco.py --help'")
     print(f"\n")
 
 def execute_command():
+    # TODO: Implement a DRY (Don't Repeat Yourself) code style :)
     if sys.argv[1] == '--help':
         show_menu()
     elif sys.argv[1] == '--yahoo':
         if (len(sys.argv) > 2):
-            ticker = sys.argv[2]
+            #ticker = sys.argv[2]
             companies = stocks.GrabCompaniesFromYahoo()
             print(companies)
         else:
@@ -55,6 +55,15 @@ def execute_command():
             prices = stocks.GrabPricesFromYahoo(ticker, days)
             print(prices)
             stocks.plot_prices(prices, ticker)
+    elif sys.argv[1] == '--candle':
+        if (len(sys.argv) > 2):
+            ticker = sys.argv[2]
+            days = 1000
+            if (len(sys.argv) > 3):
+                days = int(sys.argv[3])
+            prices = stocks.GrabPricesFromYahoo(ticker, days)
+            print(prices)
+            stocks.plot_candlestick(prices)            
     elif sys.argv[1] == '--dmaco':
         if (len(sys.argv) > 2):
             ticker = sys.argv[2]

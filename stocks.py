@@ -1,11 +1,18 @@
 import io
 import requests
 import pandas as pd
-#import numpy as np
 from datetime import datetime, timedelta
 import yfinance as yf
 import matplotlib.pyplot as plt
-plt.style.use('classic')
+import mplfinance as mpf
+
+# https://pypi.org/project/mplfinance/
+# https://towardsdatascience.com/using-python-to-visualize-stock-data-to-candlestick-charts-e1a5b08c8e9c
+
+
+#plt.style.use('fivethirtyeight')
+#plt.style.use('classic')
+plt.style.use('ggplot')
 
 def GrabCompaniesFromYahoo():
     y_url="https://pkgstore.datahub.io/core/nasdaq-listings/nasdaq-listed_csv/data/7665719fb51081ba0bd834fde71ce822/nasdaq-listed_csv.csv"
@@ -30,3 +37,6 @@ def plot_prices(df_data, StockTicker):
     plt.legend(loc='upper left')
     plt.show()
 
+
+def plot_candlestick(df_data):
+    mpf.plot(df_data, mav=(30, 100), type='candle', volume=True, style='yahoo')
