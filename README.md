@@ -18,6 +18,7 @@ This repo is free to fork or download, but has no value as an investment tool. P
 This project uses the ` yfinance ` python package to extract data from the yahoo finance web site
 
 # Algorithms and KPIs
+- Candlestick graph : Simple display of candlestick graph with colors for bullish and bearish days (no time scale)
 - SMA30 : Simple Moving Average - 30 days
 - SMA100 : Simple Moving Average - 100 days
 - Dual Cross Over Indicator : KPIs that show buy and sell indicators when SMA30 and SMA100 cross each other
