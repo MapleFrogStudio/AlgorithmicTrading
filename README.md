@@ -27,7 +27,7 @@ Install python packages ` pip install -r requirements.txt `
 Lauch app.py using ` python app.py --help ` to see available available commands
 
 # Build as an executable file
-This project installs the pyinstall package so you can create a standalone versoon using : ` pyinstaller --onefile app.py `  
+This project installs the pyinstaller package so you can create a standalone versoon using : ` pyinstaller --onefile app.py `  
   
     
 The Maple Frog Studio team hopes you will enjoy this fun learning project
