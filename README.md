@@ -8,7 +8,7 @@
   
 Algorithmic trading (also called automated trading, black-box trading, or algo-trading) uses a coded functions to implement well defined sets of instructions to place trades. This project helps to experiment with python code and theory behind these concepts.  
   
-This is a command line tool that simply grabs price data and display graphs and KPIs using past historical data for a stock ticker. It is not ready for predictions or automatic trading.  
+This is a command line tool that simply grabs price data and displays graphs and KPIs using past historical data for a stock ticker. It is not ready for predictions or automatic trading.  
   
 Many platforms exist on the Web to automate trading, this project is not intended to replace any of them  
   
