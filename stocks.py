@@ -1,4 +1,5 @@
 import io
+import os
 import requests
 import pandas as pd
 from datetime import datetime, timedelta
@@ -13,6 +14,7 @@ import mplfinance as mpf
 #plt.style.use('fivethirtyeight')
 #plt.style.use('classic')
 plt.style.use('ggplot')
+
 
 def GrabCompaniesFromYahoo():
     y_url="https://pkgstore.datahub.io/core/nasdaq-listings/nasdaq-listed_csv/data/7665719fb51081ba0bd834fde71ce822/nasdaq-listed_csv.csv"
@@ -29,6 +31,10 @@ def GrabPricesFromYahoo(ticker, days):
     _prices = yf.download(ticker,start=_start, end=_end, progress=False)
     return _prices
 
+def MassPricesFromYahoo():
+    pass    
+
+
 def plot_prices(df_data, StockTicker):
     plt.figure(figsize=(15,6))
     plt.plot(df_data['Close'], label='Close', alpha = 0.35)
@@ -40,3 +46,4 @@ def plot_prices(df_data, StockTicker):
 
 def plot_candlestick(df_data):
     mpf.plot(df_data, mav=(30, 100), type='candle', volume=True, style='yahoo')
+

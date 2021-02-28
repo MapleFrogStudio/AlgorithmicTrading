@@ -1,3 +1,5 @@
+from datetime import datetime
+import time
 import sys
 
 from dotenv import load_dotenv
@@ -31,7 +33,10 @@ def default_help():
 
 def execute_command():
     # TODO: Implement a DRY (Don't Repeat Yourself) code style :)
-    if sys.argv[1] == '--help':
+    if sys.argv[1] == '--go':
+        prices = stocks.GrabPricesFromQuandl("TSLA", 500)
+        print(prices)
+    elif sys.argv[1] == '--help':
         show_menu()
     elif sys.argv[1] == '--yahoo':
         if (len(sys.argv) > 2):
