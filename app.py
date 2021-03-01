@@ -1,88 +1,50 @@
 from datetime import datetime
 import time
 import sys
+from typing import Text
 
 from dotenv import load_dotenv
 load_dotenv()
 
+# https://pysimplegui.readthedocs.io/en/latest/
+import PySimpleGUI as sg
+
 # Maple Frog Studio Packages (TODO: Implement as a real package)
 import stocks
 import dmaco
-#from dmaco import *
 
-def show_menu():
-    print(f"\nDual Margin Average Cross Over Indicators ( © Maple Frog Studio, 2021, Alpha v0.1)")
-    print(f"--- SMA30 vs SMA100")
-    print(f"--- Historical pricing from Yahho Finance ---\n")
-    print(f"Usage: 'py dmaco.py --option [<ticker> <days>]'")
-    print(f"     --yahoo                    : Get list of all companies on yahoo finance")
-    print(f"     --info <ticker>            : Get company info for ticker (data from yahoo finance)")
-    print(f"     --hist <ticker> <days>     : Show historical stock prices, days = 1000 by default")
-    print(f"     --candle <ticker> <days>   : Show Candlestick graph with volumes and 3 SMA?, days = 1000 by default")
-    print(f"     --dmaco <ticker> <days>    : Show Dual Margin Cross Over (SMA30 vs SMA100), days = 1000 by default")
-    print(f"  [optional values]:") 
-    print(f"     <ticker> : Stock ticker of file to load")
-    print(f"     <days>   : Number of days to show from latest stock price value (default = 1000 days)")
+
+WIN_W = 90
+WIN_H = 25
+START_UP = True
+filename = None
+
+# 2 - Layout Defintio (of the main window)
+file_new    = "New.........(ctrl+n)"
+file_open   = "Open........(ctrl+o)"
+file_save   = "Save........(ctrl+s)"
+menu_layout = [ ['File', [file_new, file_open, file_save, 'Save as', '---', 'Exit']],
+                ['Tools', ['Word Count']],
+                ['Help', ['About']]
+              ]
+
+layout = [  [sg.Menu(menu_layout)],
+            [sg.Text('> New file <', font=('Consolas', 10), size=(WIN_W, 1), key='__INFO__' )],
+            [sg.Multiline(font=('Consolas', 10), size=(WIN_W, WIN_H), key='__BODY__') ]]
+
+sg.theme('DarkAmber') 
+
+# 3 - Create the window
+window = sg.Window('Notepad', layout=layout, margins=(0,0), resizable=True, return_keyboard_events=True, finalize=True)
+
+# 4 - Event loop (to display and adjust the windows layout sections with new information)
+window.maximize()
+window['__BODY__'].expand(expand_x=True, expand_y=True)
+while True:
+    event, values = window.read(timeout=1)
     
-    print(f"\n")
+    if event in (None, 'Exit'):
+        break
 
-def default_help():
-    print(f"\nDual Margin Average Cross Over Indicators ( © Maple Frog Studio, 2021, Alpha v0.1)")
-    print(f"Usage: 'py dmaco.py --help'")
-    print(f"\n")
-
-def execute_command():
-    # TODO: Implement a DRY (Don't Repeat Yourself) code style :)
-    if sys.argv[1] == '--go':
-        prices = stocks.GrabPricesFromQuandl("TSLA", 500)
-        print(prices)
-    elif sys.argv[1] == '--help':
-        show_menu()
-    elif sys.argv[1] == '--yahoo':
-        if (len(sys.argv) > 2):
-            #ticker = sys.argv[2]
-            companies = stocks.GrabCompaniesFromYahoo()
-            print(companies)
-        else:
-            print(stocks.GrabCompaniesFromYahoo())
-    elif sys.argv[1] == '--info':
-        if (len(sys.argv) > 2):
-            ticker = sys.argv[2]
-            companies = stocks.GrabCompaniesFromYahoo()
-            info = companies[companies['Symbol'] == ticker]
-            print(info)
-    elif sys.argv[1] == '--hist':
-        if (len(sys.argv) > 2):
-            ticker = sys.argv[2]
-            days = 1000
-            if (len(sys.argv) > 3):
-                days = int(sys.argv[3])
-            prices = stocks.GrabPricesFromYahoo(ticker, days)
-            print(prices)
-            stocks.plot_prices(prices, ticker)
-    elif sys.argv[1] == '--candle':
-        if (len(sys.argv) > 2):
-            ticker = sys.argv[2]
-            days = 1000
-            if (len(sys.argv) > 3):
-                days = int(sys.argv[3])
-            prices = stocks.GrabPricesFromYahoo(ticker, days)
-            print(prices)
-            stocks.plot_candlestick(prices)            
-    elif sys.argv[1] == '--dmaco':
-        if (len(sys.argv) > 2):
-            ticker = sys.argv[2]
-            days = 1000
-            if (len(sys.argv) > 3):
-                days = int(sys.argv[3])
-            prices = stocks.GrabPricesFromYahoo(ticker, days)
-            print(prices)
-            dmaco.plot_kpis(prices, ticker)
-#
-# Show menu if executed from command line
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        execute_command()
-    else:
-        default_help()
-        
+# 5 - Close the window
+window.close()

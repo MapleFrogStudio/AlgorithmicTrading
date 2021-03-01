@@ -14,8 +14,11 @@ Many platforms exist on the Web to automate trading, this project is not intende
   
 This repo is free to fork or download, but has no value as an investment tool. Please do your own research and consult a financial advisor before buying or selling any stocks.  
    
-# Data sources
-This project uses the ` yfinance ` python package to extract data from the yahoo finance web site
+# Data sources experimentation
+` yfinance ` python package to extract from the decommissioned Yahoo data API  - ![github](https://github.com/ranaroussi/yfinance) ![pypi](https://pypi.org/project/yfinance/)
+` pandas_datareader ` pyhton package to extract data from multiple sources - ![github.io](https://pydata.github.io/pandas-datareader/whatsnew.html) ![pypi](https://pypi.org/project/pandas-datareader/)  
+` mplfinance ` python pakkage to plot chart data  ![github](https://github.com/matplotlib/mplfinance#history)  ![pypi](https://pypi.org/project/mplfinance/)  
+
 
 # Algorithms and KPIs
 - SMA30 : Simple Moving Average - 30 days

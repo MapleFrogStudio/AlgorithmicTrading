@@ -2,6 +2,8 @@ import io
 import os
 import requests
 import pandas as pd
+import pandas_datareader as web
+from pandas_datareader.nasdaq_trader import get_nasdaq_symbols
 from datetime import datetime, timedelta
 import yfinance as yf
 import matplotlib.pyplot as plt
@@ -9,12 +11,24 @@ import mplfinance as mpf
 
 # https://pypi.org/project/mplfinance/
 # https://towardsdatascience.com/using-python-to-visualize-stock-data-to-candlestick-charts-e1a5b08c8e9c
+# https://pandas-datareader.readthedocs.io/en/latest/remote_data.html
 
 
 #plt.style.use('fivethirtyeight')
 #plt.style.use('classic')
 plt.style.use('ggplot')
 
+def NasdaqSymbols():
+    symbols = get_nasdaq_symbols()
+    return symbols
+
+def GrabPrices(ticker, _start, _end):
+    source = 'yahoo'
+    ticker = ticker.upper()
+    start = pd.to_datetime(_start)
+    end = pd.to_datetime(_end)
+    data = web.DataReader(ticker, source, start, end)
+    return data
 
 def GrabCompaniesFromYahoo():
     y_url="https://pkgstore.datahub.io/core/nasdaq-listings/nasdaq-listed_csv/data/7665719fb51081ba0bd834fde71ce822/nasdaq-listed_csv.csv"

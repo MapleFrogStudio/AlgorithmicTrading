@@ -1,9 +1,16 @@
+# Some common python libraries
 python-dotenv
 pandas
-yfinance
 matplotlib
 numpy
-pyinstaller
+
+# Special finance packages
+pandas-datareader
+yfinance
 mplfinance
 
+# GUI Package (not sure to keep)
+PySimpleGUI
 
+# EXE generator package
+pyinstaller
