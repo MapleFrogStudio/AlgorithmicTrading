@@ -33,7 +33,7 @@ Install python packages ` pip install -r requirements.txt `
 Lauch app.py using ` python app.py --help ` to see available available commands
 
 ## Experimental stuff
-[` streamlit `](https://docs.streamlit.io/en/stable/) open-source Python library that makes it easy to create and share beautiful, custom web apps for machine learning and data science  
+[` streamlit `](https://docs.streamlit.io/en/stable/) open-source Python library that makes it easy to create and share beautiful, custom web apps for machine learning and data science. To launch this viewer from command line : ` streamlit run "./web.py" `  
 [` PySimpleGUI `](https://pysimplegui.readthedocs.io/en/latest/) Python GUI For Humans - Transforms tkinter, Qt, Remi, WxPython into portable people-friendly Pythonic interfaces
 
 ## Build as an executable file

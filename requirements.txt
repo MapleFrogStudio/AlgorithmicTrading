@@ -11,6 +11,7 @@ mplfinance
 
 # GUI Package (not sure to keep)
 PySimpleGUI
+streamlit
 
 # EXE generator package
 pyinstaller

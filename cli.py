@@ -8,7 +8,6 @@ load_dotenv()
 # Maple Frog Studio Packages (TODO: Implement as a real package)
 import stocks
 import dmaco
-from gui import show_gui
 
 
 def show_menu():
@@ -16,8 +15,7 @@ def show_menu():
     print(f"--- SMA30 vs SMA100")
     print(f"--- Historical pricing from Yahho Finance ---\n")
     print(f"Usage: 'py app.py --option [<ticker> <days>]'")
-    print(f"     --gui                      : Open the GUI interface for AlgoTrade")
-    print(f"     --yahoo                    : Get list of all companies on yahoo finance")
+    print(f"     --nasdaq                   : Get list of nasdaq companies")
     print(f"     --info <ticker>            : Get company info for ticker (data from yahoo finance)")
     print(f"     --hist <ticker> <days>     : Show historical stock prices, days = 1000 by default")
     print(f"     --candle <ticker> <days>   : Show Candlestick graph with volumes and 3 SMA?, days = 1000 by default")
@@ -31,25 +29,19 @@ def show_menu():
 def default_help():
     print(f"\nDual Margin Average Cross Over Indicators ( © Maple Frog Studio, 2021, Alpha v0.1)")
     print(f"Usage: py app.py --help")
-    print(f"       py app.py --gui to use the graphical user interface")
     print(f"\n")
 
 def execute_command():
     # TODO: Implement a DRY (Don't Repeat Yourself) code style :)
-    if sys.argv[1] == '--gui':
-        show_gui()
-    elif sys.argv[1] == '--go':
+    if sys.argv[1] == '--go':
         prices = stocks.GrabPricesFromQuandl("TSLA", 500)
         print(prices)
     elif sys.argv[1] == '--help':
         show_menu()
-    elif sys.argv[1] == '--yahoo':
-        if (len(sys.argv) > 2):
-            #ticker = sys.argv[2]
-            companies = stocks.GrabCompaniesFromYahoo()
-            print(companies)
-        else:
-            print(stocks.GrabCompaniesFromYahoo())
+    elif sys.argv[1] == '--nasdaq':
+        companies = stocks.NasdaqSymbols()
+        print(companies)
+        print(companies.columns)
     elif sys.argv[1] == '--info':
         if (len(sys.argv) > 2):
             ticker = sys.argv[2]
