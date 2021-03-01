@@ -15,9 +15,9 @@ Many platforms exist on the Web to automate trading, this project is not intende
 This repo is free to fork or download, but has no value as an investment tool. Please do your own research and consult a financial advisor before buying or selling any stocks.  
    
 # Data sources experimentation
-` yfinance ` python package to extract from the decommissioned Yahoo data API  - ![github](https://github.com/ranaroussi/yfinance) ![pypi](https://pypi.org/project/yfinance/)
-` pandas_datareader ` pyhton package to extract data from multiple sources - ![github.io](https://pydata.github.io/pandas-datareader/whatsnew.html) ![pypi](https://pypi.org/project/pandas-datareader/)  
-` mplfinance ` python pakkage to plot chart data  ![github](https://github.com/matplotlib/mplfinance#history)  ![pypi](https://pypi.org/project/mplfinance/)  
+` yfinance ` python package to extract from the decommissioned Yahoo data API  ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/yfinance?label=yfinance&logo=pypi&style=plastic)  
+` pandas_datareader ` pyhton package to extract data from multiple sources - ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandas-datareader?label=pandas-datareader&logo=pypi&style=plastic)  
+` mplfinance ` python pakkage to plot chart data  ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mplfinance?label=mplfinance&logo=pypi&style=plastic)
 
 
 # Algorithms and KPIs
