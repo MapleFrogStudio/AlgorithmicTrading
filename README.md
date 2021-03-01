@@ -15,9 +15,9 @@ Many platforms exist on the Web to automate trading, this project is not intende
 This repo is free to fork or download, but has no value as an investment tool. Please do your own research and consult a financial advisor before buying or selling any stocks.  
    
 # Data sources experimentation
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/yfinance?label=yfinance&logo=pypi&style=plastic)  ` yfinance ` python package to extract from the decommissioned Yahoo data API  
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandas-datareader?label=pandas-datareader&logo=pypi&style=plastic)  ` pandas_datareader ` pyhton package to extract data from multiple sources  
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mplfinance?label=mplfinance&logo=pypi&style=plastic) ` mplfinance ` python pakkage to plot chart data  
+` yfinance ` python package to extract from the decommissioned Yahoo data API  
+` pandas_datareader ` pyhton package to extract data from multiple sources  
+` mplfinance ` python pakkage to plot chart data  
 
 
 # Algorithms and KPIs
@@ -38,3 +38,7 @@ This project installs the pyinstaller package so you can create a standalone ver
     
 The Maple Frog Studio team hopes you will enjoy this fun learning project
 
+# Some links
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mplfinance?label=mplfinance&logo=pypi&style=plastic)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandas-datareader?label=pandas-datareader&logo=pypi&style=plastic)  
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/yfinance?label=yfinance&logo=pypi&style=plastic)  
