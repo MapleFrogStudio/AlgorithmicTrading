@@ -14,35 +14,35 @@ Many platforms exist on the Web to automate trading, this project is not intende
   
 This repo is free to fork or download, but has no value as an investment tool. Please do your own research and consult a financial advisor before buying or selling any stocks.  
    
-# Data sources experimentation
+## Data sources experimentation
 ` yfinance ` python package to extract from the decommissioned Yahoo data API  
 ` pandas_datareader ` pyhton package to extract data from multiple sources  
 ` mplfinance ` python pakkage to plot chart data  
 
 
-# Algorithms and KPIs
+## Algorithms and KPIs
 - SMA30 : Simple Moving Average - 30 days
 - SMA100 : Simple Moving Average - 100 days
 - Dual Cross Over Indicator : KPIs that show buy and sell indicators when SMA30 and SMA100 cross each other
 
-# Usage
+## Usage
 Clone this repo to your workspace ` git clone https://github.com/MapleFrogStudio/AlgorithmicTrading.git `  
 Create a virtual environment ` python -m venv env `  
 Upgrade your pip tool ` python -m pip install --upgrade pip `  
 Install python packages ` pip install -r requirements.txt `  
 Lauch app.py using ` python app.py --help ` to see available available commands
 
-# Experimental stuff
+## Experimental stuff
 [` streamlit `](https://docs.streamlit.io/en/stable/) open-source Python library that makes it easy to create and share beautiful, custom web apps for machine learning and data science  
 [` PySimpleGUI `](https://pysimplegui.readthedocs.io/en/latest/) Python GUI For Humans - Transforms tkinter, Qt, Remi, WxPython into portable people-friendly Pythonic interfaces
 
-# Build as an executable file
+## Build as an executable file
 This project installs the pyinstaller package so you can create a standalone versoon using : ` pyinstaller --onefile app.py `  
   
     
 The Maple Frog Studio team hopes you will enjoy this fun learning project
 
-# Finance Packages
+## Finance Packages
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mplfinance?label=mplfinance&logo=pypi&style=plastic)  
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandas-datareader?label=pandas-datareader&logo=pypi&style=plastic)   
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/yfinance?label=yfinance&logo=pypi&style=plastic)  
