@@ -1,6 +1,5 @@
 # Algorithmic Trading - Python For Fun 
 
-:frog:
 ![GitHub](https://img.shields.io/github/license/MapleFrogStudio/AlgorithmicTrading?style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/MapleFrogStudio/AlgorithmicTrading?style=plastic)
 ![PyPI - Python Version](https://img.shields.io/badge/python-3.4%2B-blue?color=blue&style=plastic)
@@ -41,7 +40,7 @@ Lauch app.py using ` python app.py --help ` to see available available commands
 This project installs the pyinstaller package so you can create a standalone versoon using : ` pyinstaller --onefile app.py `  
   
     
-The Maple Frog Studio team hopes you will enjoy this fun learning project
+:frog:  The Maple Frog Studio team hopes you will enjoy this fun learning project  :frog:  
 
 ## Finance Packages
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mplfinance?label=mplfinance&logo=pypi&style=plastic)  
