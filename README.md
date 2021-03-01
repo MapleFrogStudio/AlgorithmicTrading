@@ -40,7 +40,7 @@ Lauch app.py using ` python app.py --help ` to see available available commands
 This project installs the pyinstaller package so you can create a standalone versoon using : ` pyinstaller --onefile app.py `  
   
     
-:frog:  The Maple Frog Studio team hopes you will enjoy this fun learning project  :frog:  
+:frog:  The Maple Frog Studio team hopes you will enjoy this learning project  :frog:  
 
 ## Finance Packages
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mplfinance?label=mplfinance&logo=pypi&style=plastic)  
