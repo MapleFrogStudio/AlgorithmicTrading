@@ -43,6 +43,6 @@ This project installs the pyinstaller package so you can create a standalone ver
 :frog:  The Maple Frog Studio team hopes you will enjoy this learning project  :frog:  
 
 ## External Finance Packages
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mplfinance?label=mplfinance&logo=pypi&style=plastic)](https://pypi.org/project/mplfinance/)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandas-datareader?label=pandas-datareader&logo=pypi&style=plastic)   
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/yfinance?label=yfinance&logo=pypi&style=plastic)  
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mplfinance?label=mplfinance&logo=pypi&style=plastic)](https://pypi.org/project/mplfinance/)  
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandas-datareader?label=pandas-datareader&logo=pypi&style=plastic)](https://pypi.org/project/pandas-datareader/)   
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/yfinance?label=yfinance&logo=pypi&style=plastic)](https://pypi.org/project/yfinance/)  
