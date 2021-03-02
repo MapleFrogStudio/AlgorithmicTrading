@@ -1,7 +1,9 @@
 # Stock market dashboard to show chatrs and data on stocks
+# streamlit run "./web.py"
 import streamlit as st
 import pandas as pd
 from PIL import Image
+import matplotlib.pyplot as plt
 
 import stocks
 
@@ -31,8 +33,7 @@ def load_stock_data(ticker, _start, _end):
 
 
 st.write("""
-# Stock Market Web Application
-** Virtually** show data on a stock! Date range from today minus 300 days
+# Stock Market Web Application 
 """)
 
 image = Image.open("./candles.jpg")
@@ -41,10 +42,16 @@ st.sidebar.header('User input')
 
 # Get the user's input data rom stream
 start, end, symbol = get_input()
-data = load_stock_data(symbol, start, end)
+df_data = load_stock_data(symbol, start, end)
 name = get_company_name(symbol)
 
 # Dislay the close price
 st.header(name+" Close Price\n")
-st.line_chart(data['Close'])
+#st.line_chart(data['Close'])
 
+
+fig = plt.figure(figsize=(15,6))
+plt.plot(df_data['Close'], label=symbol, alpha = 0.5, color='black')
+plt.legend(loc='upper left')
+#plt.show()
+st.pyplot(fig)
