@@ -19,7 +19,6 @@ This repo is free to fork or download, but has no value as an investment tool. P
 ` pandas_datareader ` pyhton package to extract data from multiple sources  
 ` mplfinance ` python pakkage to plot chart data  
 
-
 ## Algorithms and KPIs
 - SMA30 : Simple Moving Average - 30 days
 - SMA100 : Simple Moving Average - 100 days
