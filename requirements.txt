@@ -2,6 +2,7 @@
 python-dotenv
 pandas
 matplotlib
+plotly
 numpy
 
 # Special finance packages
@@ -12,6 +13,8 @@ mplfinance
 # GUI Package (not sure to keep)
 PySimpleGUI
 streamlit
+ib_insync
+dash
 
 # EXE generator package
 pyinstaller

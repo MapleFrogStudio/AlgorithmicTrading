@@ -2,8 +2,10 @@
 # streamlit run "./web.py"
 import streamlit as st
 import pandas as pd
+import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
+import plotly
 
 import stocks
 
@@ -27,31 +29,38 @@ def load_stock_data(ticker, _start, _end):
     return data
 
 
-# my_ticker = 'AMZN'
-# print(get_company_name(my_ticker))
-# print(load_stock_data(my_ticker, '2020-01-01', '2021-01-31'))
 
-
+#######################################################
+# Streamlit configuration                             #
+#######################################################
 st.write("""
-# Stock Market Web Application 
+# Stock Market Web Application  
+
 """)
+
 
 image = Image.open("./candles.jpg")
 st.image(image, use_column_width=True)
 st.sidebar.header('User input')
 
-# Get the user's input data rom stream
+# Get the user's input data from stream
 start, end, symbol = get_input()
 df_data = load_stock_data(symbol, start, end)
 name = get_company_name(symbol)
 
+st.sidebar.write(type(nasdaq))
+st.sidebar.write(nasdaq['NASDAQ Symbol'].values)
+st.sidebar.write(nasdaq.columns)
+
 # Dislay the close price
 st.header(name+" Close Price\n")
-#st.line_chart(data['Close'])
-
 
 fig = plt.figure(figsize=(15,6))
 plt.plot(df_data['Close'], label=symbol, alpha = 0.5, color='black')
 plt.legend(loc='upper left')
 #plt.show()
 st.pyplot(fig)
+
+st.dataframe(df_data)
+
+st.write(nasdaq[['Security Name', 'Market Category', 'ETF', 'Test Issue', 'Round Lot Size']])

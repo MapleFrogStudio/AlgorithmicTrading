@@ -1,5 +1,6 @@
 import io
 import os
+from typing import Text
 import requests
 import pandas as pd
 import pandas_datareader as web
@@ -48,3 +49,6 @@ def plot_prices(df_data, ticker):
 def plot_candlestick(df_data):
     mpf.plot(df_data, mav=(30, 100), type='candle', volume=True, style='yahoo')
 
+def fig_candlestick(df_data):
+    fig, ax = mpf.plot(df_data, mav=(30, 100), type='candle', volume=True, style='yahoo', returnfig=Text)
+    return fig, ax
