@@ -10,6 +10,9 @@ pandas-datareader
 yfinance
 mplfinance
 
+# Machine learning packages
+scikit-learn
+
 # GUI Package (not sure to keep)
 PySimpleGUI
 streamlit

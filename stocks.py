@@ -1,12 +1,13 @@
-import io
-import os
+#import io
+#import os
+#import requests
+#import yfinance as yf
 from typing import Text
-import requests
 import pandas as pd
 import pandas_datareader as web
 from pandas_datareader.nasdaq_trader import get_nasdaq_symbols
 from datetime import datetime, timedelta
-import yfinance as yf
+
 import matplotlib.pyplot as plt
 import mplfinance as mpf
 
@@ -34,8 +35,6 @@ def GrabPrices(ticker, _start, _end):
     end = pd.to_datetime(_end)
     data = web.DataReader(ticker, source, start, end)
     return data
-
-
 
 
 def plot_prices(df_data, ticker):
