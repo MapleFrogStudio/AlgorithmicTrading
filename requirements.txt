@@ -21,3 +21,10 @@ dash
 
 # EXE generator package
 pyinstaller
+
+# Other packages from tutorials
+chart_studio
+seaborn
+cufflinks
+
+

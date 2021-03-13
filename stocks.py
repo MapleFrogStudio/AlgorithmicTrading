@@ -20,7 +20,6 @@ import mplfinance as mpf
 #plt.style.use('classic')
 plt.style.use('ggplot')
 
-
 #
 # PANDAS_DATAREADER_FUNCTIONS
 #
@@ -48,6 +47,22 @@ def plot_prices(df_data, ticker):
 def plot_candlestick(df_data):
     mpf.plot(df_data, mav=(30, 100), type='candle', volume=True, style='yahoo')
 
+def demo_candlestick(prices):
+    mpf.plot(prices,volume=True, type='candle', tight_layout=True,
+            figratio=(30,15),
+            title='Microsoft 2020-2021',
+            mav=(30,100),
+            style='yahoo'
+           )             
+
 def fig_candlestick(df_data):
     fig, ax = mpf.plot(df_data, mav=(30, 100), type='candle', volume=True, style='yahoo', returnfig=Text)
     return fig, ax
+
+
+
+
+if __name__ == '__main__':
+    print(f"Default chart using MSFT (Microsoft) with MAV of 30 and 100 days")
+    prices = GrabPrices("MSFT", "2020-06-01", "2021-01-31")
+    demo_candlestick(prices)
