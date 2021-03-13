@@ -2,6 +2,7 @@
 python-dotenv
 pandas
 matplotlib
+plotly
 numpy
 
 # Special finance packages
@@ -9,9 +10,21 @@ pandas-datareader
 yfinance
 mplfinance
 
+# Machine learning packages
+scikit-learn
+
 # GUI Package (not sure to keep)
 PySimpleGUI
 streamlit
+ib_insync
+dash
 
 # EXE generator package
 pyinstaller
+
+# Other packages from tutorials
+chart_studio
+seaborn
+cufflinks
+
+
