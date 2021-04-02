@@ -9,6 +9,7 @@ numpy
 pandas-datareader
 yfinance
 mplfinance
+wallstreet
 
 # Machine learning packages
 scikit-learn

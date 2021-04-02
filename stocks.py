@@ -5,11 +5,13 @@
 from typing import Text
 import pandas as pd
 import pandas_datareader as web
+from pandas_datareader.data import Options
 from pandas_datareader.nasdaq_trader import get_nasdaq_symbols
 from datetime import datetime, timedelta
 
 import matplotlib.pyplot as plt
 import mplfinance as mpf
+
 
 # https://pypi.org/project/mplfinance/
 # https://towardsdatascience.com/using-python-to-visualize-stock-data-to-candlestick-charts-e1a5b08c8e9c
@@ -34,6 +36,15 @@ def GrabPrices(ticker, _start, _end):
     end = pd.to_datetime(_end)
     data = web.DataReader(ticker, source, start, end)
     return data
+
+def GrabOptions(ticker):
+    source = 'yahoo'
+    ticker = ticker.upper()
+    result = Options(ticker, data_source=source)
+    return result
+
+
+
 
 
 def plot_prices(df_data, ticker):
