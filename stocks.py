@@ -1,15 +1,18 @@
 #import io
 #import os
 #import requests
-#import yfinance as yf
+
 from typing import Text
 import pandas as pd
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+
+# Specialty finance libraries/packages
+import yfinance as yf
 import pandas_datareader as web
 from pandas_datareader.nasdaq_trader import get_nasdaq_symbols
-from datetime import datetime, timedelta
-
-import matplotlib.pyplot as plt
 import mplfinance as mpf
+
 
 # https://pypi.org/project/mplfinance/
 # https://towardsdatascience.com/using-python-to-visualize-stock-data-to-candlestick-charts-e1a5b08c8e9c
@@ -36,6 +39,10 @@ def GrabPrices(ticker, _start, _end):
     return data
 
 
+
+#
+# Ploting functions
+#
 def plot_prices(df_data, ticker):
     plt.figure(figsize=(15,6))
     plt.plot(df_data['Close'], label='Close', alpha = 0.35)
@@ -61,8 +68,11 @@ def fig_candlestick(df_data):
 
 
 
-
 if __name__ == '__main__':
     print(f"Default chart using MSFT (Microsoft) with MAV of 30 and 100 days")
-    prices = GrabPrices("MSFT", "2020-06-01", "2021-01-31")
+    symbol = "MSFT"
+    end_date = datetime.today()
+    start_date = end_date - timedelta(days = 365)
+    #prices = GrabPrices("MSFT", "2020-06-01", "2021-01-31")
+    prices = GrabPrices(symbol, start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d"))
     demo_candlestick(prices)
