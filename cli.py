@@ -34,6 +34,8 @@ def default_help():
     print(f"Usage: py cli.py --help")
     print(f"\n")
 
+
+
 def execute_command():
     # TODO: Implement a DRY (Don't Repeat Yourself) code style :)
     if sys.argv[1] == '--go':

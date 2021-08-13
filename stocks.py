@@ -31,12 +31,19 @@ def NasdaqSymbols():
     return symbols
 
 def GrabPrices(ticker, _start, _end):
+    
     source = 'yahoo'
     ticker = ticker.upper()
     start = pd.to_datetime(_start)
     end = pd.to_datetime(_end)
     data = web.DataReader(ticker, source, start, end)
     return data
+
+
+#
+# QUANDL Datareaders
+#
+
 
 
 

@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 #plt.style.use('fivethirtyeight')
 plt.style.use('classic')
 
-# Create simple moving average 30 day window
+# Create simple moving average 30 days window
 def CreateSMA30(Stocks):
     SMA30 = pd.DataFrame()
     SMA30['Close'] = Stocks['Close'].rolling(window = 30).mean()
     return SMA30
 
-# Create a simple moving average for 100 days
+# Create a simple moving average for 100 days window
 def CreateSMA100(Stocks):
     SMA100 = pd.DataFrame()
     SMA100['Close'] = Stocks['Close'].rolling(window=100).mean()
@@ -70,6 +70,7 @@ def view_data(df_data, StockTicker):
     plt.ylabel('Close price (USD$)')
     plt.legend(loc='upper left')
     plt.show()
+
 
 def plot_kpis(stocks, ticker):
     SMA30 = CreateSMA30(stocks)
