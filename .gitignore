@@ -105,3 +105,6 @@ json/
 
 # VS Code
 .vscode
+
+# Databases
+*.sqlite
