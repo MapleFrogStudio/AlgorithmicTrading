@@ -1,3 +1,5 @@
+# ARCHIVE OLD PROJECT - NEW START on 2021-08-13  
+  
 # Algorithmic Trading - Python For Fun 
 
 ![GitHub](https://img.shields.io/github/license/MapleFrogStudio/AlgorithmicTrading?style=plastic)
