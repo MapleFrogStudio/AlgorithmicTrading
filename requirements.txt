@@ -4,7 +4,3 @@ pandas
 sqlalchemy
 selenium
 pandas-datareader
-
-# UI Packages
-pillow
-matplotlib
