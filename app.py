@@ -2,7 +2,6 @@ import getopt
 from stocks import tsx
 
 from stocks.tsx import TSX
-from stocks.gui import GUI
 
 # Date range for historical data download
 start_date = "2015-01-01"
