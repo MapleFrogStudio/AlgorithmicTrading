@@ -4,6 +4,9 @@ from stocks import tsx
 from stocks.tsx import TSX
 from stocks.gui import GUI
 
+# Date range for historical data download
+start_date = "2015-01-01"
+end_date   = "2020-12-31"
 # Create a TSX object
 tsx = TSX()
 
@@ -16,7 +19,7 @@ alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
 
 for letter in alph:
     stocks = tsx.get_yahoo_tickers_for(test_db, letter)
-    prices = tsx.get_prices_from_yahoo(stocks, "2015-01-01", "2020-12-31")
+    prices = tsx.get_prices_from_yahoo(stocks, start_date, end_date)
     print(prices)
     success = tsx.save_prices_to_DB(test_db, prices)
     print(f"\n\nLetter {letter} save status : {success}\n\n")

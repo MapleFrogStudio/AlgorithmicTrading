@@ -30,7 +30,12 @@ Please do your own research and consult a financial advisor before buying or sel
 The selenium package controls a web browser installed on your local machine. Please follow instructions on the pypi installation page : https://pypi.org/project/selenium/ to setup correctly. In a word, you need a special program called "chromedriver.exe" that will be accessible by your app. In the TSX_Browser class located in the stocks\tsx .py module set the self.__CHROME_DRIVER_LOCATION to the location of that file. The [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) program is produced and distributed by google.
 
 #### Usage
-Once installation is complete, run ` python app.py ` to populate a SQLITE3 database named 'TSX_Data.sqlite'. 
+Once installation is complete, run ` python app.py ` to populate a SQLITE3 database named 'TSX_Data.sqlite' with historical prices for all TSX symbols between 2015-01-01 to 2020-12-31. 
+To change dates for historical data download, open app.py and change the following varoables : start_date, end_date to a 'yyyy-mm-dd' format. Be careful this app does not prevent duplicate dates for historical data, so if you download the same date twice, the database will have doubles.
+
+#### Viewing Data
+Use a SQLITE database browser to view the downloaded data.
+One free and open source tool is [DB Browser for SQLite](https://sqlitebrowser.org/).
 
 # Packages
 #### Python packages
@@ -43,6 +48,3 @@ Once installation is complete, run ` python app.py ` to populate a SQLITE3 datab
 
 #### External Finance Packages
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandas-datareader?label=pandas-datareader&logo=pypi&style=plastic)](https://pypi.org/project/pandas-datareader/)  
-
-
-
