@@ -3,7 +3,7 @@ import os
 import sys
 import getopt
 import datetime
-from numpy.lib.function_base import append
+# from numpy.lib.function_base import append
 import pandas as pd
 import sqlalchemy
 import logging
@@ -255,41 +255,41 @@ class TSX:
 
 
 
-if __name__ == '__main__':
-    logging.basicConfig(
-        level=logging.CRITICAL,
-        format="{asctime} {levelname:<8} {message}",
-        style='{'
-    )
-    # Open a tsx object
-    t = TSX()
-    if t is None:
-        sys.exit()
+# if __name__ == '__main__':
+#     logging.basicConfig(
+#         level=logging.CRITICAL,
+#         format="{asctime} {levelname:<8} {message}",
+#         style='{'
+#     )
+#     # Open a tsx object
+#     t = TSX()
+#     if t is None:
+#         sys.exit()
     
-    # Remove comment to update TSX Tickers Table
-    # t.update_all_tickers('TSX_Stocks_v2.sqlite', progess=True)
+#     # Remove comment to update TSX Tickers Table
+#     # t.update_all_tickers('TSX_Stocks_v2.sqlite', progess=True)
     
-    test_db = "TSX_Stocks_v3.sqlite"
+#     test_db = "TSX_Stocks_v3.sqlite"
 
-    # alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0-9']
-    # tick_num = []
-    # for letter in alph:
-    #     stocks = t.get_yahoo_tickers_for('TSX_Stocks_v2_clean.sqlite', letter)
-    #     tick_num.append({"letter":letter, "count":len(stocks)})
-    # print(tick_num)
+#     # alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0-9']
+#     # tick_num = []
+#     # for letter in alph:
+#     #     stocks = t.get_yahoo_tickers_for('TSX_Stocks_v2_clean.sqlite', letter)
+#     #     tick_num.append({"letter":letter, "count":len(stocks)})
+#     # print(tick_num)
 
-    alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-    for letter in alph:
-        stocks = t.get_yahoo_tickers_for(test_db, letter)
-        prices = t.get_prices_from_yahoo(stocks, "2021-01-01", "2021-07-31")
-        print(prices)
-        success = t.save_prices_to_DB(test_db, prices)
-        print(f"\n\nLetter {letter} save status : {success}\n\n")
+#     alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+#     for letter in alph:
+#         stocks = t.get_yahoo_tickers_for(test_db, letter)
+#         prices = t.get_prices_from_yahoo(stocks, "2021-01-01", "2021-07-31")
+#         print(prices)
+#         success = t.save_prices_to_DB(test_db, prices)
+#         print(f"\n\nLetter {letter} save status : {success}\n\n")
     
   
 
 
-    t.dispose()
+#     t.dispose()
 
 
 

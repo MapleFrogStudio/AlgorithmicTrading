@@ -1,0 +1,10 @@
+python-dotenv
+# Data, Scraping, Stocks packages
+pandas
+sqlalchemy
+selenium
+pandas-datareader
+
+# UI Packages
+pillow
+matplotlib
