@@ -11,7 +11,7 @@ tsx = TSX()
 
 test_db = 'TSX_Data.sqlite'
 # Extracte all TSX ticker symbols from the TMX website abd create a SQLITE3 database name TSX_Data.sqlite
-tsx.update_all_tickers(test_db)
+tsx.update_all_tickers(test_db, progess=True)
 
 # Loop through all letters in the alphabet to extract prices data for 2015-01-01 to 2020-12-31
 alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z', '0-9']
