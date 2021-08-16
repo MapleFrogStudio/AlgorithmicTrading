@@ -30,7 +30,7 @@ Please do your own research and consult a financial advisor before buying or sel
 The selenium package controls a web browser installed on your local machine. Please follow instructions on the pypi installation page : https://pypi.org/project/selenium/ to setup correctly. In a word, you need a special program called "chromedriver.exe" that will be accessible by your app. In the TSX_Browser class located in the stocks\tsx .py module set the self.__CHROME_DRIVER_LOCATION to the location of that file. The [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) program is produced and distributed by google.
 
 #### Usage
-Once installation is complete, run the stocks.tsx module to extract
+Once installation is complete, run ` python app.py ` to populate a SQLITE3 database named 'TSX_Data.sqlite'
 
 # Packages
 #### Python packages

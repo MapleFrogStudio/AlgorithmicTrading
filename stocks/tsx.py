@@ -269,7 +269,7 @@ class TSX:
 #     # Remove comment to update TSX Tickers Table
 #     # t.update_all_tickers('TSX_Stocks_v2.sqlite', progess=True)
     
-#     test_db = "TSX_Stocks_v3.sqlite"
+#     test_db = "TSX_Data.sqlite"
 
 #     # alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0-9']
 #     # tick_num = []
