@@ -31,7 +31,16 @@ The selenium package controls a web browser installed on your local machine. Ple
 
 #### Usage
 Once installation is complete, run ` python app.py ` to populate a SQLITE3 database named 'TSX_Data.sqlite' with historical prices for all TSX symbols between 2015-01-01 to 2020-12-31. 
-To change dates for historical data download, open app.py and change the following varoables : start_date, end_date to a 'yyyy-mm-dd' format. Be careful this app does not prevent duplicate dates for historical data, so if you download the same date twice, the database will have doubles.
+To change dates for historical data download, open app.py and change the following varoables : start_date, end_date to a 'yyyy-mm-dd' format. Be careful this app does not prevent duplicate dates for historical data, so if you download the same date twice, the database will have doubles.  
+  
+If you want to remove duplicate rows from every table in your database, use ` python clean.py `. This will  
+1- create a temporary backup of your database,  
+2- create a new database with cleaned tables,  
+3- delete the original database,  
+4- rename the cleaned database to the originale database name 
+5- remove the backup database.  
+(Make sure you have enough disk space ofr this operation).
+
 
 #### Viewing Data
 Use a SQLITE database browser to view the downloaded data.

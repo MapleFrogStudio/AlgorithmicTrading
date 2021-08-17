@@ -38,7 +38,7 @@ class TSX_Browser():
         try:
             self.driver.quit()
         except Exception as e:
-            logging.critical(f"Unable to quit() Chrome Driver, Error: {e}")
+            logging.info(f"Unable to quit() Chrome Driver, Error: {e}")
 
     def set_exchange(self, exchange) -> bool:
         # Make sure we have a driver available
@@ -73,7 +73,7 @@ class TSX_Browser():
                 WebDriverWait(self.driver, self.seconds_to_wait).until( EC.visibility_of_element_located((By.CSS_SELECTOR, tsx_flag)))
                 return True
             except Exception as e:
-                logging.critical(f"Unable to switch TSX Echange page, Error: {e}")
+                logging.warning(f"Unable to switch TSX Echange page, Error: {e}")
                 raise
                 return False
 
@@ -125,7 +125,7 @@ class TSX:
         try:
             self.chrome_browser.set_exchange(exchange)
         except Exception as e:
-            logging.critical(f"Unable to set TSX Exchange Page, Error: {e}")
+            logging.warning(f"Unable to set TSX Exchange Page to: {exchange}, Error: {e}")
             return None
         if progress:
             print(f"\n\n Extracting data for : {search_str}")       
@@ -171,6 +171,7 @@ class TSX:
             engine = sqlalchemy.create_engine(f"sqlite:///{DB}")
         except Exception as e:
             logging.critical(f"Unable to create DB Engine, Error: {e}")
+            raise
             return False
 
         save_type = "append" if not overwrite else "replace"
@@ -178,7 +179,7 @@ class TSX:
             df_tickers.to_sql('tsx_symbols', engine, if_exists=save_type)
             saved = True
         except Exception as e:
-            logging.critical(f"Unable to save DataFrame using .to_sql(), Error: {e}")
+            logging.warning(f"Unable to save DataFrame ({df_tickers}) using .to_sql() probably empty DataFrame, Error: {e}")
             saved = False
             # Raise an error
         finally:
@@ -199,16 +200,27 @@ class TSX:
             df_tickers = self.extract_tickers_for_str(letter,exchange='tsxv', progress=progess)
             self.save_tickers_in_DB(DB, df_tickers, overwrite=overwrite)
 
-        self.cleanup_DB(DB)
 
-    def cleanup_DB(self, DB):
-        db_to_clean = DB
-        db_cleaned  = DB.replace('.','_clean.')
-        engine1 = sqlalchemy.create_engine(f"sqlite:///{db_to_clean}")
-        engine2 = sqlalchemy.create_engine(f"sqlite:///{db_cleaned}")
-        data1 = pd.read_sql_table("tsx_symbols", engine1)
-        data2 = data1.drop_duplicates('ticker')
-        data2.to_sql('tsx_symbols',engine2, if_exists='replace')
+    def remove_duplicates(self, DB):
+        os.popen(f"copy {DB} {DB}.BK")
+        engine1 = sqlalchemy.create_engine(f"sqlite:///{DB}")
+        engine2 = sqlalchemy.create_engine(f"sqlite:///{DB}-cleaned")
+        tables = pd.read_sql("SELECT name FROM sqlite_master WHERE type='table'", engine1)
+        for table in tables['name'].values:
+            data = pd.read_sql_table(table, engine1)
+            if table == 'tsx_symbols':
+                data_cleaned = data.drop_duplicates('ticker')
+            else:
+                data_cleaned = data.drop_duplicates('Date')
+            data_cleaned.to_sql(table, engine2, if_exists='replace')
+            logging.info(f"Removed duplicates for table : {table}")
+            print(f"Removed duplicates for table : {table}")
+ 
+
+        os.remove(f"{DB}")
+        os.rename(f"{DB}-cleaned", f"{DB}")
+        os.remove(f"{DB}.BK")
+
 
     def get_yahoo_tickers_for(self, DB, starts_with):
         # tickers = ["AW-UN.TO", "QUS.TO", "ARD.V"]
@@ -217,7 +229,7 @@ class TSX:
             df_tickers = pd.read_sql(f"SELECT yahoo FROM tsx_symbols WHERE yahoo LIKE '{starts_with}%'", engine)
             tickers = df_tickers['yahoo'].tolist()
         except Exception as e:
-            logging.critical(f"Unable to get list of tickers ({DB}, {starts_with}), Error: {e}")
+            logging.info(f"Unable to get list of tickers ({DB}, {starts_with}), Error: {e}")
             tickers = None
         return tickers
 
@@ -246,7 +258,7 @@ class TSX:
                 data.to_sql(ticker, engine, if_exists='append')
                 engine.dispose()
             except Exception as e:
-                logging.critical(f"Unable to save DataFrame using .to_sql(), Error: {e}")
+                logging.info(f"Unable to save DataFrame ({data}) using .to_sql() probably empty DataFrame, Error: {e}")
                 return False
 
         return True
@@ -257,7 +269,7 @@ class TSX:
 
 # if __name__ == '__main__':
 #     logging.basicConfig(
-#         level=logging.CRITICAL,
+#         level=logging.INFO,
 #         format="{asctime} {levelname:<8} {message}",
 #         style='{'
 #     )
