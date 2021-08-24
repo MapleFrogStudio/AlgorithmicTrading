@@ -1,140 +1,147 @@
-import os
-import tkinter as tk
+from tkinter import *
+from tkinter import ttk
 
-from PIL import Image, ImageTk
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+from tsx import TSX
 
-
-class GUI_env():
-    def __init__(self):
-        self.path = os.path.dirname(os.path.realpath(__name__))
-        self.data = "\DATA"
-
-    @property
-    def databases(self):
-        db_path = self.path + self.data
-        files = os.listdir(db_path)
-        databases = []
-        for file in files:
-            filename, file_extension = os.path.splitext(file)
-            if file_extension == ".sqlite":
-                databases.append(filename)
-        if len(databases) < 1:
-            databases = None
-        
-        return databases
-
-class GUI_Plot():
-    def __init__(window):
-        fig = Figure(figsize = (5,5), dpi= 100)
-        y = [i**2 for i in range(101)]
-        plot1 = fig.add_subplot(111)
-
-        plot1.plot(y)
-        canvas = FigureCanvasTkAgg(fig, master = window)  
-        canvas.draw()
-
-        canvas.get_tk_widget().pack()
-        toolbar = NavigationToolbar2Tk(canvas, window)
-        toolbar.update()
-        canvas.get_tk_widget().pack()
-
-
-class GUI():
-    FONT = 'Raleway'
-
-    BTN_BG_COLOR = '#20bebe'
-    BTN_FG_COLOR = 'white'
-    BTN_HEIGHT   = 1
-    BTN_WIDTH    = 10
+class RootWin(Tk):
+    IMAGES_PATH = "C:\Workspace\Python\Stocks\AlgorithmicTrading\IGNORE\images\\"
+    ICON_FILE   = "poivronjaune.ico"
 
     def __init__(self):
-        print(f"Gui app loading...")
-        self.env = GUI_env()
+        super().__init__()
+        # configure the root window
+        self.title('TSX Screener App')
+        icon_image = RootWin.IMAGES_PATH+RootWin.ICON_FILE
+        self.iconbitmap(icon_image)
+        self.geometry('1200x700+50+10')
+        # Main window only has 1 column on which we display all our widgets
+        self.columnconfigure(0, weight=1)
+        # Main window has 3 row where row 1 has the weight
+        self.rowconfigure(1, weight=1)
+        self.configure(bg="light sky blue")
 
-        self.root = tk.Tk()
-        self.canvas = tk.Canvas(self.root, width=1500, height=800)
-        self.canvas.grid(columnspan=8, rowspan=6)
+        self.__create_widgets()
 
-        self.display_logo('logo.png',1,0)
-        self.display_instructions("Select a PDF file on your computer to extract all its text")
-        self.display_button( 'Plot', 1, 2)
+    def __create_widgets(self):
+        self.menu_bar   = MenuFrame(self, row=0)
+        self.tickers    = TickerFrame(self, row=1)
+        self.status_bar = StatusBarFrame(self, row=2)
 
+
+class MenuFrame(Frame):
+    # Display on row 0 by default (Top)
+    def __init__(self, parent, row=0):
+        super().__init__(parent)  
+        # Create Header Frame (full width, expanding) on which we will place our widgets
+        self.grid(row=row, column=0, sticky='nsew')
+        self.rowconfigure(0, weight=1)  
+        self.columnconfigure(0, weight=1)
+        self.configure(bg="PeachPuff")
+
+        # Add widgets at same level as the menu_panel (not on it)
+        self.__create_widgets()
+
+    def __create_widgets(self):
+        self.menu_item1 = Label(self, text="Item 1",  bg="PeachPuff2")
+        self.menu_item1.grid(row=0,column=0,sticky="w")        
+        self.menu_item2 = Label(self, text="Item 2",  bg="PeachPuff3")
+        self.menu_item2.grid(row=0,column=1,sticky="e")
         
-        self.show_env()
 
-        self.root.mainloop()
+class TickerFrame(Frame):
+    def __init__(self, container, row=0):
+        super().__init__(container)
+        self.grid(row=row, column=0, sticky='nsew')
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.configure(bg="LightSteelBlue1")
+
+        self.__create_widgets()
+
+    def __create_widgets(self):
+        self.my_tree = ttk.Treeview(self)
+        # Crete a tree lits to displat
+        self.my_tree['columns'] = ('ID','Ticker', 'Company Name', 'Exchange', 'Yahoo Symbol', 'Filer')
+        self.my_tree.column("#0"          ,           width=0 , stretch=NO)
+        self.my_tree.column("ID"          , anchor=W, width=60, stretch=NO)
+        self.my_tree.column("Ticker"      , anchor=W, width=75, stretch=NO)
+        self.my_tree.column("Company Name", anchor=W, width=150)
+        self.my_tree.column("Exchange"    , anchor=W, width=70, stretch=NO)
+        self.my_tree.column("Yahoo Symbol", anchor=W, width=75, stretch=NO)
+        self.my_tree.column("Filer"       , anchor=E          , stretch=YES)
+        # Create headings 
+        self.my_tree.heading("#0"          ,text="Label"       , anchor="w")
+        self.my_tree.heading("ID"          ,text="ID"          , anchor="w")
+        self.my_tree.heading("Ticker"      ,text="Ticker"      , anchor="w")
+        self.my_tree.heading("Company Name",text="Company Name", anchor="w")
+        self.my_tree.heading("Exchange"    ,text="Exchange"    , anchor="w")
+        self.my_tree.heading("Yahoo Symbol",text="Yahoo"       , anchor="w")
+        self.my_tree.heading("Filer"       ,text=""            , anchor="e")
+        # create striped rows
+        self.my_tree.tag_configure('oddrow' , background="white")
+        self.my_tree.tag_configure('evenrow', background="lightblue")
+        # Doube Click handler
+        self.my_tree.bind('<Double-1>', self.on_dclick)
+
+        self.my_tree.grid(row=0,column=0, sticky="nsew")
+
+    def on_dclick(self, event):
+        item = self.my_tree.selection()[0]
+        list_of_values = self.my_tree.item(item).get('values')
+        print(f"Double clicked a line, {list_of_values}")
+
+    def add_ticker(self, data, v):
+        # data is dict of the form {"level_0": 3210, "ticker":"ZIK", "name":"some string", "exchange":"tsx","yahoo":"ZIK.TO"}
+        #self.ticker_list.insert(END, data)
+        ID       = data["level_0"]
+        ticker   = data["ticker"]
+        name     = data["name"]
+        exchange = data["exchange"]
+        yahoo    = data["yahoo"]
+
+        # if len(self.my_tree.get_children()) % 2 == 0:
+        if v:
+            self.my_tree.insert(parent='', index='end', iid=ID, values=(ID, ticker, name, exchange, yahoo, ""), tags=('oddrow,'))
+        else:
+            self.my_tree.insert(parent='', index='end', iid=ID, values=(ID, ticker, name, exchange, yahoo, ""), tags=('evenrow',))
+        
     
-    # def __init__(self) -> None:
-    #     # Main tkinter window
-    #     self.window = Tk()
-
-    #     # Setting the tilte
-    #     self.window.title('Plotting in TKinter')
-
-    #     self.window.geometry("1100x500")
-
-    #     # Button that will display the plot
-    #     width, height = 10, 2
-    #     plot_button = Button(
-    #         master = self.window,
-    #         height = height,
-    #         width  = width,
-    #         text   = f"Plot {width, height} "
-    #     )
-
-    #     # Place the button in the window
-    #     plot_button.pack()
-
-    #     # Run the GUI loop
-    #     self.window.mainloop()
-
-    def display_logo(self, logofile, col, row):
-        # Load logo as a Pillow image
-        logo = Image.open(logofile)
-        logo = ImageTk.PhotoImage(logo)
-        self.logo_label = tk.Label(image=logo)
-        self.logo_label.image = logo
-        self.logo_label.grid(column=col, row=row)
-
-    def display_instructions(self, msg):
-        self.instructions = tk.Label(self.root, text=msg, font=GUI.FONT)
-        self.instructions.grid(columnspan=3, column=0, row=1)
- 
-    def display_button(self, text, col, row):
-        browse_txt = tk.StringVar()
-        browse_btn = tk.Button(self.root, textvariable=browse_txt, 
-                                font=GUI.FONT, 
-                                bg    = GUI.BTN_BG_COLOR,
-                                fg    = GUI.BTN_FG_COLOR,
-                                height= GUI.BTN_HEIGHT,
-                                width = GUI.BTN_WIDTH,
-                                command=self.Plot
-                                )
-        browse_txt.set(text)
-        browse_btn.grid(column=col, row=row)
-
-    def Plot(self):
-        print(f"Plot funct  : No used")
+    def add_tickers(self, data_list):
+        #for ticker in data_list:
+        #    self.add_ticker(ticker)
         pass
-    #     fig = Figure(figsize = (5,5), dpi= 100)
-    #     y = [i**2 for i in range(101)]
-    #     plot1 = fig.add_subplot(111)
+    
+   
 
-    #     plot1.plot(y)
-    #     canvas = FigureCanvasTkAgg(fig, master = self.root)  
-    #     canvas.draw()
+class StatusBarFrame(Frame):
+    # Display on row 0 by default (Top)
+    def __init__(self, parent, row=0):
+        super().__init__(parent)  
+        # Create Header Frame (full width, expanding) on which we will place our widgets
+        self.grid(row=row, column=0, sticky='nsew')
+        self.rowconfigure(0, weight=1)  
+        self.columnconfigure(0, weight=1)
+        self.configure(bg="Khaki")
 
-    #     canvas.get_tk_widget().pack()
-    #     toolbar = NavigationToolbar2Tk(canvas, self.root)
-    #     toolbar.update()
-    #     canvas.get_tk_widget().pack()
+        # Add widgets at same level as the menu_panel (not on it)
+        self.__create_widgets()
+
+    def __create_widgets(self):
+        self.msg1 = Label(self, text="Status Bar",  bg="Khaki3")
+        self.msg1.grid(row=2,column=0,sticky="e")
 
 
-    # DEBUG STUFF
-    def show_env(self):
-        print(f"os path     : {self.env.path} ")
-        print(f"data folder : { self.env.path}{self.env.data } ")
-        print(f"files       : {self.env.databases}")
-        
+
+if __name__ == "__main__":
+    root = RootWin()
+
+    tsx = TSX()
+    highlight = True
+    companies = tsx.get_company_info_for("TSX_Data.sqlite", "A")
+    for company in companies:
+        root.tickers.add_ticker(company, highlight)
+        highlight = not highlight
+
+    print(companies)
+
+    root.mainloop()

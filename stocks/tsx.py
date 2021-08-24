@@ -102,7 +102,7 @@ class TSX_Company_Info():
         yahoo_ticker = f"{yahoo_ticker}.{yahoo_extension}"
         return yahoo_ticker
 
-class TSX:
+class TSX():
     def __init__(self):
         self.chrome_browser = None
 
@@ -220,6 +220,19 @@ class TSX:
             logging.critical(f"Unable to get list of tickers ({DB}, {starts_with}), Error: {e}")
             tickers = None
         return tickers
+
+    def get_company_info_for(self, DB, starts_with):
+        # tickers = ["AW-UN.TO", "QUS.TO", "ARD.V"]
+        try:
+            engine = sqlalchemy.create_engine(f"sqlite:///{DB}")
+            df_companies = pd.read_sql(f"SELECT * FROM tsx_symbols WHERE name LIKE '{starts_with}%'", engine)
+            df_companies = df_companies.drop(['url', 'index'], axis=1)
+            df_companies.reset_index(drop=True)
+            companies = df_companies.to_dict('records')
+        except Exception as e:
+            logging.critical(f"Unable to get list of tickers ({DB}, {starts_with}), Error: {e}")
+            tickers = None
+        return companies
 
     def get_prices_from_yahoo(self, stocks_list, start, end):
         data = web.DataReader(stocks_list,'yahoo', start, end)
