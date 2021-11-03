@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 from sqlalchemy import engine
 load_dotenv()
 
-class TSX_Browser():
+class TSX_Browser:
     def __init__(self, chrome_driver_path=None):
         self.url_ticker= "https://www.tsx.com/listings/listing-with-us/listed-company-directory"       
         self.__OPTIONS = webdriver.ChromeOptions()
@@ -77,7 +77,7 @@ class TSX_Browser():
                 raise
                 return False
 
-class TSX_Company_Info():
+class TSX_Company_Info:
     def __init__(self, name, ticker, exchange='tsx'):
         self.name       = name.upper().strip()
         self.ticker     = ticker.upper().strip()
@@ -102,9 +102,11 @@ class TSX_Company_Info():
         yahoo_ticker = f"{yahoo_ticker}.{yahoo_extension}"
         return yahoo_ticker
 
-class TSX():
-    def __init__(self):
+class TSX:
+    def __init__(self, DB="TSX_Data.sqlite"):
         self.chrome_browser = None
+        self.DB = DB
+     
 
     def dispose(self):
         if self.chrome_browser is not None:
@@ -221,18 +223,18 @@ class TSX():
             tickers = None
         return tickers
 
-    def get_company_info_for(self, DB, starts_with):
-        # tickers = ["AW-UN.TO", "QUS.TO", "ARD.V"]
+    def get_company_info_for(self, starts_with):
         try:
-            engine = sqlalchemy.create_engine(f"sqlite:///{DB}")
+            engine = sqlalchemy.create_engine(f"sqlite:///{self.DB}")
             df_companies = pd.read_sql(f"SELECT * FROM tsx_symbols WHERE name LIKE '{starts_with}%'", engine)
             df_companies = df_companies.drop(['url', 'index'], axis=1)
             df_companies.reset_index(drop=True)
             companies = df_companies.to_dict('records')
+            return companies
         except Exception as e:
-            logging.critical(f"Unable to get list of tickers ({DB}, {starts_with}), Error: {e}")
-            tickers = None
-        return companies
+            logging.critical(f"Unable to get list of tickers ({self.DB}, {starts_with}), Error: {e}")
+            return None
+        
 
     def get_prices_from_yahoo(self, stocks_list, start, end):
         data = web.DataReader(stocks_list,'yahoo', start, end)
@@ -250,7 +252,7 @@ class TSX():
         return results
 
     def save_prices_to_DB(self, DB, prices):
-        # Prices is a list of as obtained from "get_prices_from_yahoo"
+        # Prices is a list of price data as obtained from "get_prices_from_yahoo"
         for company in prices:
             ticker = company.get('symbol')
             data   = company.get('prices')
@@ -264,26 +266,58 @@ class TSX():
 
         return True
             
+    def read_historical_prices_for(self, yahoo_ticker):
+        try:
+            engine = sqlalchemy.create_engine(f"sqlite:///{self.DB}")
+            df_prices = pd.read_sql(f"SELECT * FROM '{yahoo_ticker}'", engine, parse_dates=['Date'])
+            df_prices.drop('index', axis=1, inplace=True)
+            df_prices.reset_index()
+            df_prices.set_index('Date', inplace=True)
+            return df_prices
+        except Exception as e:
+            logging.critical(f"Unable to retrieve price data for [{yahoo_ticker}] using DataFrame.read_sql(), Error: {e}")
+            return None
+
+    def get_tsx_stats(self):
+        try:
+            engine = sqlalchemy.create_engine(f"sqlite:///{self.DB}")
+            tsx_companies = pd.read_sql(f"SELECT * FROM tsx_symbols WHERE exchange='tsx'", engine)
+            tsxv_companies = pd.read_sql(f"SELECT * FROM tsx_symbols WHERE exchange='tsxv'", engine)
+            tsx_count = tsx_companies.shape[0]
+            tsxv_count = tsxv_companies.shape[0]
+            stats = {
+                "DB" : self.DB,
+                "count_tsx" : tsx_count,
+                "count_tsxv" : tsxv_count
+            }
+            return stats
+        except Exception as e:
+            logging.critical(f"Unable to retrieve count for tsx data, Error: {e}")
+            return None
 
 
 
 
-# if __name__ == '__main__':
-#     logging.basicConfig(
-#         level=logging.CRITICAL,
-#         format="{asctime} {levelname:<8} {message}",
-#         style='{'
-#     )
-#     # Open a tsx object
-#     t = TSX()
-#     if t is None:
-#         sys.exit()
-    
-#     # Remove comment to update TSX Tickers Table
+
+if __name__ == '__main__':
+    logging.basicConfig(
+        level=logging.CRITICAL,
+        format="{asctime} {levelname:<8} {message}",
+        style='{'
+    )
+    # Open a tsx object
+    # t = TSX("TSX_Data.sqlite")
+    # if t is None:
+    #     sys.exit()
+    # historical = t.read_historical_prices_for("AAB.TO")
+
+
+#     # Remove comment to update TSX Tickers Table (list of all TSX tickers listed)
 #     # t.update_all_tickers('TSX_Stocks_v2.sqlite', progess=True)
     
-#     test_db = "TSX_Stocks_v3.sqlite"
+    # test_db = "TSX_Stocks_v3.sqlite"
 
+      # Only used for testing purposes
 #     # alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0-9']
 #     # tick_num = []
 #     # for letter in alph:
@@ -291,18 +325,21 @@ class TSX():
 #     #     tick_num.append({"letter":letter, "count":len(stocks)})
 #     # print(tick_num)
 
-#     alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-#     for letter in alph:
-#         stocks = t.get_yahoo_tickers_for(test_db, letter)
-#         prices = t.get_prices_from_yahoo(stocks, "2021-01-01", "2021-07-31")
-#         print(prices)
-#         success = t.save_prices_to_DB(test_db, prices)
-#         print(f"\n\nLetter {letter} save status : {success}\n\n")
+
+    t = TSX("TSX_Data.sqlite")
+    if t is None:
+        sys.exit()
+
+    alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+    for letter in alph:
+        stocks = t.get_yahoo_tickers_for(t.DB, letter)
+        prices = t.get_prices_from_yahoo(stocks, "2021-01-01", "2021-10-31")
+        print(prices)
+        success = t.save_prices_to_DB(t.DB, prices)
+        print(f"\n\nLetter {letter} save status : {success}\n\n")
     
-  
 
-
-#     t.dispose()
+    t.dispose()
 
 
 
